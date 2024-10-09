@@ -29,8 +29,9 @@ export class Oauth2AuthService {
 
   private fetchUserHttp$ = new Observable<ConnectedUser>();
 
-  fetchUser$: WritableSignal<State<ConnectedUser>> = signal(State.Builder<ConnectedUser>().forSuccess({email: this.notConnected}));
-  fetchUser = computed(() => this.fetchUser$)
+  private fetchUser$: WritableSignal<State<ConnectedUser>> = signal(State.Builder<ConnectedUser>().forSuccess({email: this.notConnected}));
+  fetchUser = computed(() => this.fetchUser$())
+
 
   constructor() {
     this.initFetchUserCaching(false);
