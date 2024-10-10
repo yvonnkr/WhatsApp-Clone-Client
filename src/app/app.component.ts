@@ -6,11 +6,14 @@ import {fontAwesomeIcons} from './shared/font-awesome-icons';
 import {Oauth2AuthService} from './auth/oauth2-auth.service';
 import {NavbarComponent} from './layout/navbar/navbar.component';
 import {ToastService} from './shared/toast/toast.service';
+import dayjs from 'dayjs';
+import relativeTime from "dayjs/plugin/relativeTime";
+import {ConversationsComponent} from './conversations/conversations.component';
 
 @Component({
   selector: 'wac-root',
   standalone: true,
-  imports: [RouterOutlet, NgbAccordionModule, FaIconComponent, NavbarComponent, NgbToast],
+  imports: [RouterOutlet, NgbAccordionModule, FaIconComponent, NavbarComponent, NgbToast, ConversationsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,7 +26,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.initFontAwesome();
     this.initAuthentication();
+    this.configDayJs()
 
+  }
+
+  private configDayJs() {
+    dayjs.extend(relativeTime)
   }
 
   private initAuthentication(): void {
