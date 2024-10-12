@@ -8,6 +8,7 @@ import {ConnectedUser} from '../shared/model/user.model';
 import {catchError, from, interval, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {fromPromise} from 'rxjs/internal/observable/innerFrom';
 import {AuthModalComponent} from './auth-modal/auth-modal.component';
+import {SseService} from '../messages/service/sse.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,10 @@ import {AuthModalComponent} from './auth-modal/auth-modal.component';
 export class Oauth2AuthService {
   http = inject(HttpClient);
   modalService = inject(NgbModal);
+  sseService = inject(SseService);
 
   notConnected = "NOT_CONNECTED"
-  accessToken: String | undefined;
+  accessToken: string | undefined;
   private MIN_TOKEN_VALIDITY_MILLISECONDS = 10000;
   private authModalRef: NgbModalRef | undefined;
 
@@ -52,7 +54,7 @@ export class Oauth2AuthService {
           if (this.authModalRef) {
             this.authModalRef.close();
           }
-          // this.sseService.subscribe(this.accessToken!); todo
+          this.sseService.subscribe(this.accessToken!);
         } else {
           this.authModalRef = this.modalService
             .open(AuthModalComponent, {centered: true, backdrop: "static"});
