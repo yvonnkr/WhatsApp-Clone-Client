@@ -59,13 +59,13 @@ export class SseService {
     //   this.viewMessages$.next(JSON.parse(event.data));
     // });
 
-    // this.eventSource!.onmessage = ((event) => {
-    //   if (event.data.indexOf("{") !== -1) {
-    //     const message: Message = JSON.parse(event.data);
-    //     message.sendDate = dayjs(message.sendDate);
-    //     this.receiveNewMessage$.next(message);
-    //   }
-    // });
+    this.eventSource!.onmessage = ((event) => {
+      if (event.data.indexOf("{") !== -1) {
+        const message: Message = JSON.parse(event.data);
+        message.sendDate = dayjs(message.sendDate);
+        this.receiveNewMessage$.next(message);
+      }
+    });
 
   }
 
